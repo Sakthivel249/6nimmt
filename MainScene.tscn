@@ -1,0 +1,115 @@
+[gd_scene load_steps=3 format=3 uid="uid://gcmgqugxawfx"]
+
+[ext_resource type="Texture2D" uid="uid://cghm3xn8wefw0" path="res://Background.png" id="1_3mqji"]
+[ext_resource type="Script" uid="uid://bah45pk3uefli" path="res://main.gd" id="1_x4av3"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_x4av3")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3mqji")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.163
+anchor_top = 0.125
+anchor_right = 0.163
+anchor_bottom = 0.125
+offset_left = -117.776
+offset_top = -14.0
+offset_right = 117.224
+offset_bottom = 14.0
+text = "Enter the number of players :"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+anchors_preset = -1
+anchor_left = 0.301
+anchor_top = 0.123
+anchor_right = 0.301
+anchor_bottom = 0.123
+offset_left = -33.752
+offset_top = -15.704
+offset_right = 34.8105
+offset_bottom = 15.296
+
+[node name="start_button" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.429
+anchor_top = 0.123
+anchor_right = 0.429
+anchor_bottom = 0.123
+offset_left = -42.208
+offset_top = -17.704
+offset_right = 42.792
+offset_bottom = 18.296
+text = "Start"
+
+[node name="StacksGrid" type="GridContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.267
+anchor_top = 0.592
+anchor_right = 0.267
+anchor_bottom = 0.592
+offset_left = -291.584
+offset_top = -234.616
+offset_right = 292.416
+offset_bottom = 234.384
+
+[node name="PlayerHandContainer" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.593
+anchor_top = 0.519
+anchor_right = 0.593
+anchor_bottom = 0.519
+offset_left = -88.136
+offset_top = -51.312
+offset_right = 330.864
+offset_bottom = 51.688
+mouse_filter = 2
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerTurnLabel" type="Label" parent="UILayer"]
+anchors_preset = -1
+anchor_left = 0.701
+anchor_top = 0.392
+anchor_right = 0.701
+anchor_bottom = 0.392
+offset_left = -99.5521
+offset_top = -27.016
+offset_right = 100.448
+offset_bottom = 46.984
+
+[node name="ScoreLabel" type="Label" parent="UILayer"]
+anchors_preset = -1
+anchor_left = 0.549
+anchor_top = 0.322
+anchor_right = 0.549
+anchor_bottom = 0.322
+offset_left = -104.448
+offset_top = -29.656
+offset_right = 104.552
+offset_bottom = 29.344
+
+[node name="ChosenCardsContainer" type="GridContainer" parent="UILayer"]
+anchors_preset = -1
+anchor_left = 0.679
+anchor_top = 0.733
+anchor_right = 0.679
+anchor_bottom = 0.733
+offset_left = -96.208
+offset_top = -63.984
+offset_right = 96.792
+offset_bottom = 64.016
+columns = 10
+
+[connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]
