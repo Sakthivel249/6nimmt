@@ -1,4 +1,3 @@
-# card.gd
 extends TextureButton
 
 # Signal emitted when the card is clicked. It sends a reference to itself.
