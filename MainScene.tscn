@@ -24,10 +24,10 @@ anchor_left = 0.163
 anchor_top = 0.125
 anchor_right = 0.163
 anchor_bottom = 0.125
-offset_left = -117.776
+offset_left = -112.776
 offset_top = -14.0
 offset_right = 117.224
-offset_bottom = 14.0
+offset_bottom = 27.0
 text = "Enter the number of players :"
 
 [node name="LineEdit" type="LineEdit" parent="."]
@@ -38,19 +38,19 @@ anchor_right = 0.301
 anchor_bottom = 0.123
 offset_left = -33.752
 offset_top = -15.704
-offset_right = 34.8105
+offset_right = 135.248
 offset_bottom = 15.296
 
 [node name="start_button" type="Button" parent="."]
 anchors_preset = -1
-anchor_left = 0.429
-anchor_top = 0.123
-anchor_right = 0.429
-anchor_bottom = 0.123
-offset_left = -42.208
-offset_top = -17.704
-offset_right = 42.792
-offset_bottom = 18.296
+anchor_left = 0.493
+anchor_top = 0.125
+anchor_right = 0.493
+anchor_bottom = 0.125
+offset_left = -42.936
+offset_top = -18.0
+offset_right = 42.064
+offset_bottom = 18.0
 text = "Start"
 
 [node name="StacksGrid" type="GridContainer" parent="."]
@@ -81,35 +81,96 @@ mouse_filter = 2
 [node name="PlayerTurnLabel" type="Label" parent="UILayer"]
 anchors_preset = -1
 anchor_left = 0.701
-anchor_top = 0.392
+anchor_top = 0.44
 anchor_right = 0.701
-anchor_bottom = 0.392
+anchor_bottom = 0.44
 offset_left = -99.5521
-offset_top = -27.016
+offset_top = -37.12
 offset_right = 100.448
-offset_bottom = 46.984
+offset_bottom = 36.88
 
 [node name="ScoreLabel" type="Label" parent="UILayer"]
 anchors_preset = -1
 anchor_left = 0.549
-anchor_top = 0.322
+anchor_top = 0.355
 anchor_right = 0.549
-anchor_bottom = 0.322
+anchor_bottom = 0.355
 offset_left = -104.448
-offset_top = -29.656
+offset_top = -51.04
 offset_right = 104.552
-offset_bottom = 29.344
+offset_bottom = 50.96
 
 [node name="ChosenCardsContainer" type="GridContainer" parent="UILayer"]
 anchors_preset = -1
-anchor_left = 0.679
-anchor_top = 0.733
-anchor_right = 0.679
-anchor_bottom = 0.733
-offset_left = -96.208
-offset_top = -63.984
-offset_right = 96.792
-offset_bottom = 64.016
+anchor_left = 0.691
+anchor_top = 0.773
+anchor_right = 0.691
+anchor_bottom = 0.773
+offset_left = -81.032
+offset_top = -63.9041
+offset_right = 111.968
+offset_bottom = 64.0959
 columns = 10
+
+[node name="RevealLabel" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.709
+anchor_top = 0.692
+anchor_right = 0.709
+anchor_bottom = 0.692
+offset_left = -96.7681
+offset_top = -21.416
+offset_right = 96.2319
+offset_bottom = 21.584
+text = "Revealed Cards"
+
+[node name="StackLabel" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.143
+anchor_top = 0.326
+anchor_right = 0.143
+anchor_bottom = 0.326
+offset_left = -46.736
+offset_top = -15.248
+offset_right = 46.264
+offset_bottom = 15.752
+text = "Stack Cards"
+
+[node name="RowChooser" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.297
+anchor_top = 0.873
+anchor_right = 0.297
+anchor_bottom = 0.873
+offset_left = -145.144
+offset_top = -11.704
+offset_right = -105.144
+offset_bottom = 11.296
+text = "Enter the row that you wanna choose"
+
+[node name="LineEditAI" type="LineEdit" parent="."]
+anchors_preset = -1
+anchor_left = 0.306
+anchor_top = 0.208
+anchor_right = 0.306
+anchor_bottom = 0.208
+offset_left = -39.512
+offset_top = -15.784
+offset_right = 132.488
+offset_bottom = 15.216
+
+[node name="LabelAI" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.161
+anchor_top = 0.212
+anchor_right = 0.161
+anchor_bottom = 0.212
+offset_left = -123.472
+offset_top = -11.376
+offset_right = 122.528
+offset_bottom = 11.624
+text = "Enter the number of AI players :"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]
