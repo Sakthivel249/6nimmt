@@ -33,6 +33,7 @@ var waitingForRow: bool = false
 var original_input_pos: Vector2
 var original_button_pos: Vector2
 var original_button_scale: Vector2
+var cardProcessingQueue: Array = []
 
 var totalAI: int  = 0
 var aiPlayers : Array  = []
@@ -51,9 +52,9 @@ func _ready() -> void:
 	rowChooseLabel.hide()
 	playerHandContainer.hide()
 	$UILayer.hide()
-
 func _on_start_button_pressed() -> void:
 	if waitingForRow:
+		# This is now ONLY for human row choice
 		var inputText = playerCountInput.text
 		if not inputText.is_valid_int():
 			statusLabel.text = "Invalid! Enter row (1-4)."
@@ -63,50 +64,35 @@ func _on_start_button_pressed() -> void:
 			statusLabel.text = "Row must be between 1 and 4."
 			return
 		
-		var takenRow = rows[chosenRow]
-		print("Player %d chose row %d: %s" % [pendingPlayer, chosenRow + 1, str(takenRow)])
-		var bullSum = 0
-		for card in takenRow:
-			bullSum += bull_points(card)
-		scores[pendingPlayer - 1] += bullSum
-		rows[chosenRow] = [pendingCard]
-
-		update_scoreboard()
-		update_rows_display()
-
-		turnLabel.text = "Player %d took row %d and placed card %d" % [pendingPlayer, chosenRow + 1, pendingCard]
-
-		pendingCard = -1
-		pendingPlayer = -1
-		waitingForRow = false
+		# Call the new processing function
+		process_row_choice(chosenRow, pendingPlayer, pendingCard)
 		
-		playerCountInput.position = original_input_pos
-		startButton.position = original_button_pos
-		startButton.scale = original_button_scale
-		playerCountInput.hide()
-		startButton.hide()
+		# Continue the card queue
+		process_cards_in_queue()
+	
 	else:
-		var humanText= playerCountInput.text
+		# This is the original game start logic (it is unchanged)
+		var humanText = playerCountInput.text
 		if not humanText.is_valid_int():
 			statusLabel.text = "Invalid ! Enter number of human players"
 			return
-		var numHumans = humanText.to_int();
-		if numHumans <1 or numHumans > 10:
+		var numHumans = humanText.to_int()
+		if numHumans < 1 or numHumans > 10:
 			statusLabel.text = "Players must be between 1 and 10"
 			return
 		var aiText = aiCountInput.text
-		if aiText =="":
+		if aiText == "":
 			totalAI = 0
 		elif not aiText.is_valid_int():
 			statusLabel.text = "Invalid Enter number of AI players"
 			return
 		else :
-			totalAI =aiText.to_int()
-		if(numHumans == 1 and totalAI==0):
+			totalAI = aiText.to_int()
+		if(numHumans == 1 and totalAI == 0):
 			statusLabel.text = "Invalid"
-			return 
-		if(totalAI<0 or totalAI + numHumans >10):
-			statusLabel.text = "AI count must be between 0 and %d"%(10 - numHumans)
+			return
+		if(totalAI < 0 or totalAI + numHumans > 10):
+			statusLabel.text = "AI count must be between 0 and %d" % (10 - numHumans)
 			return
 		totalPlayers = numHumans + totalAI
 		aiPlayers.clear()
@@ -125,8 +111,7 @@ func _on_start_button_pressed() -> void:
 		revealLabel.show()
 		$UILayer.show()
 		
-		start_game()
-		
+		start_game()	
 func start_game() -> void:
 	print("Starting game with %d players" % totalPlayers)
 	scores.clear()
@@ -137,7 +122,7 @@ func start_game() -> void:
 	for i in range(1, 105):
 		deck.append(i)
 	deck.shuffle()
-
+	
 	setup_rows()
 	deal_cards()
 	
@@ -235,6 +220,54 @@ func simulate_state(state: Dictionary, player_index: int, card: int) -> Dictiona
 
 	
 		
+func process_row_choice(chosen_row_index: int,player_index:int,card_number : int)->void : 
+	var takenRow = rows[chosen_row_index]
+	print("Player %d chose row %d : %s"%[player_index,chosen_row_index+1,str(takenRow)])
+	var bullSum = 0
+	for card in takenRow:
+		bullSum += bull_points(card)
+	
+	scores[player_index - 1] += bullSum
+	rows[chosen_row_index] = [card_number]
+
+	update_scoreboard()
+	update_rows_display()
+	turnLabel.text = "Player %d took row %d and placed card %d" % [player_index, chosen_row_index + 1, card_number]
+	pendingCard = -1
+	pendingPlayer = -1
+	waitingForRow = false
+	
+	playerCountInput.position = original_input_pos
+	startButton.position = original_button_pos
+	startButton.scale = original_button_scale
+	playerCountInput.hide()
+	playerCountInput.text = ""
+	startButton.hide()
+	rowChooseLabel.hide()
+	statusLabel.text = "" 
+func ai_choose_row() -> void:
+	
+	print("AI Player %d must choose a row..." % pendingPlayer)
+	await get_tree().create_timer(1.0).timeout # Small delay to see what's happening
+	
+	var min_bull = INF
+	var chosen_row_index = 0
+	
+	for i in range(rows.size()):
+		var bullSum = 0
+		for c in rows[i]:
+			bullSum += bull_points(c)
+		
+		if bullSum < min_bull:
+			min_bull = bullSum
+			chosen_row_index = i
+			
+	print("AI Player %d chose row %d (Bull Points: %d)" % [pendingPlayer, chosen_row_index + 1, min_bull])
+	
+	process_row_choice(chosen_row_index, pendingPlayer, pendingCard)
+	
+	await get_tree().create_timer(1.5).timeout
+	process_cards_in_queue()
 	
 func minimax(state : Dictionary , depth : int , maximizing_player: bool,alpha:int , beta: int)-> Array:
 	if depth ==0 or hands_empty(state):
@@ -401,19 +434,38 @@ func highlight_selected_card(cardNode: TextureButton) -> void:
 	tween.tween_property(cardNode, "scale", Vector2(1, 1), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
 
+func process_cards_in_queue() -> void:
+	if waitingForRow:
+		return
+	if cardProcessingQueue.is_empty():
+		queue_free_children(revealedCardsContainer) # Clear the revealed cards
+		_process_cards() # This is your renamed _process_cards function
+		return
+	var cardData = cardProcessingQueue.pop_front()
+	var playedNumber = cardData.card
+	var playerIndex = cardData.player
+	turnLabel.text = "Placing Player %d's card: %d" % [playerIndex, playedNumber]
+	place_card(playedNumber, playerIndex)
+	await get_tree().create_timer(1.0).timeout
+	if not waitingForRow:
+		process_cards_in_queue()
 func _reveal_cards() -> void:
 	queue_free_children(revealedCardsContainer)
-	var sortedNumbers = selectedCards.values()
-	sortedNumbers.sort()
-	for number in sortedNumbers:
+	var sortedCardsData : Array  = []
+	for playerIndex in selectedCards.keys():
+		sortedCardsData.append({"player":playerIndex,"card":selectedCards[playerIndex]})
+	sortedCardsData.sort_custom(func (a,b): return a.card < b.card)
+	cardProcessingQueue = sortedCardsData
+	selectedCards.clear()
+	for cardData in cardProcessingQueue:
 		var card = CardScene.instantiate()
-		card.initialize(number)
+		card.initialize(cardData.card)
 		card.disabled = true
 		revealedCardsContainer.add_child(card)
 	
 	turnLabel.text = "All cards revealed! Processing..."
 	await get_tree().create_timer(1.5).timeout
-	_process_cards()
+	process_cards_in_queue()
 
 func _show_card(playerIndex: int, cardNumber: int) -> void:
 	var card = CardScene.instantiate()
@@ -507,20 +559,23 @@ func place_card(playedNumber: int, playerIndex: int) -> void:
 		pendingPlayer = playerIndex
 		waitingForRow = true
 
-		turnLabel.text = "Player %d must choose a row (1-4) " % playerIndex
-		rowChooseLabel.show()
-		statusLabel.text = "Enter the row number (1-4)  "
-		
-		playerCountInput.position = Vector2(1350, 180)
-		startButton.position = Vector2(1460, 180)
-		startButton.scale = Vector2(0.7, 0.7)
-		
-		playerCountInput.show()
-		playerCountInput.grab_focus()
-		playerCountInput.placeholder_text = "Row (1-4)"
-		playerCountInput.text = ""
-		startButton.text = "Confirm Row"
-		startButton.show()
+		if playerIndex in aiPlayers:
+			ai_choose_row()
+		else:
+			turnLabel.text = "Player %d must choose a row (1-4) " % playerIndex
+			rowChooseLabel.show()
+			statusLabel.text = "Enter the row number (1-4) "
+			
+			playerCountInput.position = Vector2(1350, 180)
+			startButton.position = Vector2(1460, 180)
+			startButton.scale = Vector2(0.7, 0.7)
+			
+			playerCountInput.show()
+			playerCountInput.grab_focus()
+			playerCountInput.placeholder_text = "Row (1-4)"
+			playerCountInput.text = ""
+			startButton.text = "Confirm Row"
+			startButton.show()
 	else:
 		place_card_in_row(playedNumber, playerIndex, bestRowIndex)
 
