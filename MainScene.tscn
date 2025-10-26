@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://gcmgqugxawfx"]
+[gd_scene load_steps=4 format=3 uid="uid://gcmgqugxawfx"]
 
 [ext_resource type="Texture2D" uid="uid://cghm3xn8wefw0" path="res://Background.png" id="1_3mqji"]
 [ext_resource type="Script" uid="uid://bah45pk3uefli" path="res://main.gd" id="1_x4av3"]
+
+[sub_resource type="FontVariation" id="FontVariation_x4av3"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_x4av3")
@@ -24,33 +26,36 @@ anchor_left = 0.163
 anchor_top = 0.125
 anchor_right = 0.163
 anchor_bottom = 0.125
-offset_left = -112.776
-offset_top = -14.0
-offset_right = 117.224
-offset_bottom = 27.0
+offset_left = -131.776
+offset_top = -13.0
+offset_right = 264.224
+offset_bottom = 28.0
+theme_override_fonts/font = SubResource("FontVariation_x4av3")
+theme_override_font_sizes/font_size = 28
 text = "Enter the number of players :"
 
 [node name="LineEdit" type="LineEdit" parent="."]
 anchors_preset = -1
-anchor_left = 0.301
-anchor_top = 0.123
-anchor_right = 0.301
-anchor_bottom = 0.123
-offset_left = -33.752
-offset_top = -15.704
-offset_right = 135.248
-offset_bottom = 15.296
+anchor_left = 0.209
+anchor_top = 0.137
+anchor_right = 0.209
+anchor_bottom = 0.137
+offset_left = 251.232
+offset_top = -15.776
+offset_right = 345.232
+offset_bottom = 15.224
 
 [node name="start_button" type="Button" parent="."]
 anchors_preset = -1
-anchor_left = 0.493
-anchor_top = 0.125
-anchor_right = 0.493
-anchor_bottom = 0.125
-offset_left = -42.936
-offset_top = -18.0
-offset_right = 42.064
-offset_bottom = 18.0
+anchor_left = 0.257
+anchor_top = 0.174
+anchor_right = 0.257
+anchor_bottom = 0.174
+offset_left = 348.936
+offset_top = -12.752
+offset_right = 433.936
+offset_bottom = 34.248
+theme_override_font_sizes/font_size = 28
 text = "Start"
 
 [node name="StacksGrid" type="GridContainer" parent="."]
@@ -80,84 +85,89 @@ mouse_filter = 2
 
 [node name="PlayerTurnLabel" type="Label" parent="UILayer"]
 anchors_preset = -1
-anchor_left = 0.701
-anchor_top = 0.44
-anchor_right = 0.701
-anchor_bottom = 0.44
-offset_left = -99.5521
-offset_top = -37.12
-offset_right = 100.448
-offset_bottom = 36.88
+anchor_left = 0.585
+anchor_top = 0.423
+anchor_right = 0.585
+anchor_bottom = 0.423
+offset_left = -40.92
+offset_top = -37.104
+offset_right = 159.08
+offset_bottom = 36.896
+theme_override_font_sizes/font_size = 33
 
 [node name="ScoreLabel" type="Label" parent="UILayer"]
 anchors_preset = -1
-anchor_left = 0.549
-anchor_top = 0.355
-anchor_right = 0.549
-anchor_bottom = 0.355
-offset_left = -104.448
-offset_top = -51.04
-offset_right = 104.552
-offset_bottom = 50.96
+anchor_left = 0.418
+anchor_top = 0.05
+anchor_right = 0.418
+anchor_bottom = 0.05
+offset_left = -64.536
+offset_top = 101.6
+offset_right = 144.464
+offset_bottom = 203.6
+theme_override_font_sizes/font_size = 35
 
 [node name="ChosenCardsContainer" type="GridContainer" parent="UILayer"]
 anchors_preset = -1
-anchor_left = 0.691
-anchor_top = 0.773
-anchor_right = 0.691
-anchor_bottom = 0.773
-offset_left = -81.032
-offset_top = -63.9041
-offset_right = 111.968
-offset_bottom = 64.0959
+anchor_left = 0.586
+anchor_top = 0.721
+anchor_right = 0.586
+anchor_bottom = 0.721
+offset_left = -80.072
+offset_top = -46.208
+offset_right = 112.928
+offset_bottom = 81.792
 columns = 10
 
 [node name="RevealLabel" type="Label" parent="."]
 anchors_preset = -1
-anchor_left = 0.709
-anchor_top = 0.692
-anchor_right = 0.709
-anchor_bottom = 0.692
-offset_left = -96.7681
-offset_top = -21.416
-offset_right = 96.2319
-offset_bottom = 21.584
+anchor_left = 0.592
+anchor_top = 0.637
+anchor_right = 0.592
+anchor_bottom = 0.637
+offset_left = -58.984
+offset_top = -22.776
+offset_right = 186.016
+offset_bottom = 23.224
+theme_override_font_sizes/font_size = 33
 text = "Revealed Cards"
 
 [node name="StackLabel" type="Label" parent="."]
 anchors_preset = -1
-anchor_left = 0.143
-anchor_top = 0.326
-anchor_right = 0.143
-anchor_bottom = 0.326
-offset_left = -46.736
-offset_top = -15.248
-offset_right = 46.264
-offset_bottom = 15.752
+anchor_left = 0.183
+anchor_top = 0.313
+anchor_right = 0.183
+anchor_bottom = 0.313
+offset_left = -106.816
+offset_top = -22.824
+offset_right = 78.184
+offset_bottom = 23.176
+theme_override_font_sizes/font_size = 33
 text = "Stack Cards"
 
 [node name="RowChooser" type="Label" parent="."]
 anchors_preset = -1
-anchor_left = 0.297
-anchor_top = 0.873
-anchor_right = 0.297
-anchor_bottom = 0.873
-offset_left = -145.144
-offset_top = -11.704
-offset_right = -105.144
-offset_bottom = 11.296
+anchor_left = 0.743
+anchor_top = 0.135
+anchor_right = 0.743
+anchor_bottom = 0.135
+offset_left = -201.936
+offset_top = -15.48
+offset_right = 395.064
+offset_bottom = 30.52
+theme_override_font_sizes/font_size = 33
 text = "Enter the row that you wanna choose"
 
 [node name="LineEditAI" type="LineEdit" parent="."]
 anchors_preset = -1
-anchor_left = 0.306
-anchor_top = 0.208
-anchor_right = 0.306
-anchor_bottom = 0.208
-offset_left = -39.512
-offset_top = -15.784
-offset_right = 132.488
-offset_bottom = 15.216
+anchor_left = 0.206
+anchor_top = 0.221
+anchor_right = 0.206
+anchor_bottom = 0.221
+offset_left = 254.688
+offset_top = -15.208
+offset_right = 348.688
+offset_bottom = 15.792
 
 [node name="LabelAI" type="Label" parent="."]
 anchors_preset = -1
@@ -165,12 +175,26 @@ anchor_left = 0.161
 anchor_top = 0.212
 anchor_right = 0.161
 anchor_bottom = 0.212
-offset_left = -123.472
-offset_top = -11.376
-offset_right = 122.528
-offset_bottom = 11.624
+offset_left = -130.472
+offset_top = -17.376
+offset_right = 299.528
+offset_bottom = 21.624
+theme_override_font_sizes/font_size = 28
 text = "Enter the number of AI players :"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="GameLabel" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.237
+anchor_top = 0.178
+anchor_right = 0.237
+anchor_bottom = 0.178
+offset_left = -54.024
+offset_top = -21.344
+offset_right = 67.976
+offset_bottom = 20.656
+theme_override_font_sizes/font_size = 35
+text = "6nimmt!"
 
 [connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]

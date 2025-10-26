@@ -12,6 +12,8 @@ extends Node
 @onready var stackLabel = $StackLabel
 @onready var aiCountInput = $LineEditAI
 @onready var aiLabel = $LabelAI
+@onready var gameLabel = $GameLabel
+@onready var rowChooseLabel = $RowChooser
 
 const INF = 999999
 
@@ -28,6 +30,10 @@ var pendingCard: int = -1
 var pendingPlayer: int = -1
 var waitingForRow: bool = false
 
+var original_input_pos: Vector2
+var original_button_pos: Vector2
+var original_button_scale: Vector2
+
 var totalAI: int  = 0
 var aiPlayers : Array  = []
 
@@ -35,12 +41,16 @@ var aiPlayers : Array  = []
 var roundNumber : int = 1
 var maxScore: int = 66
 func _ready() -> void:
+	original_input_pos = playerCountInput.position
+	original_button_pos = startButton.position
+	original_button_scale = startButton.scale
 	stacksContainer.hide()
+	gameLabel.hide()
 	stackLabel.hide()
 	revealLabel.hide()
+	rowChooseLabel.hide()
 	playerHandContainer.hide()
 	$UILayer.hide()
-	playerCountInput.placeholder_text = "Enter players (2-10)"
 
 func _on_start_button_pressed() -> void:
 	if waitingForRow:
@@ -69,6 +79,10 @@ func _on_start_button_pressed() -> void:
 		pendingCard = -1
 		pendingPlayer = -1
 		waitingForRow = false
+		
+		playerCountInput.position = original_input_pos
+		startButton.position = original_button_pos
+		startButton.scale = original_button_scale
 		playerCountInput.hide()
 		startButton.hide()
 	else:
@@ -102,14 +116,17 @@ func _on_start_button_pressed() -> void:
 		playerCountInput.hide()
 		aiCountInput.hide()
 		startButton.hide()
+		aiLabel.hide()
 		
 		stacksContainer.show()
 		playerHandContainer.show()
 		stackLabel.show()
+		gameLabel.show()
 		revealLabel.show()
 		$UILayer.show()
 		
 		start_game()
+		
 func start_game() -> void:
 	print("Starting game with %d players" % totalPlayers)
 	scores.clear()
@@ -325,13 +342,22 @@ func ai_play(aiIndex: int) -> void:
 
 	hands[aiIndex - 1].erase(chosenCard)
 	selectedCards[aiIndex] = chosenCard
+	
+	show_ai_chosen_card(chosenCard)
+	await get_tree().create_timer(2.0).timeout
 
 	next_turn()
 
 	if selectedCards.size() == totalPlayers:
 		_reveal_cards()
 
-
+func show_ai_chosen_card(cardNumber: int) -> void:
+	queue_free_children(playerHandContainer)
+	var card = CardScene.instantiate()
+	card.initialize(cardNumber)
+	card.disabled = true
+	card.modulate = Color(0.8, 0.8, 0.5, 1)  # slight highlight color
+	playerHandContainer.add_child(card)
 		
 		
 func show_hand(playerIndex: int) -> void:
@@ -351,13 +377,29 @@ func _on_card_selected(cardNode: TextureButton) -> void:
 	var playedNumber = cardNode.card_number
 	print("Player %d selected card %d" % [activePlayer, playedNumber])
 	selectedCards[activePlayer] = playedNumber
-	
 	hands[activePlayer - 1].erase(playedNumber)
+
+	# 🔹 Highlight the selected card visually
+	highlight_selected_card(cardNode)
+	# Wait 2 seconds before moving to the next turn
+	await get_tree().create_timer(2.0).timeout
 	cardNode.queue_free()
+
+	
 	next_turn()
 	
 	if selectedCards.size() == totalPlayers:
 		_reveal_cards()
+
+func highlight_selected_card(cardNode: TextureButton) -> void:
+	# Add a glowing border or tint
+	var tween = get_tree().create_tween()
+	cardNode.modulate = Color(1, 1, 0.5, 1)  # yellow tint to show selection
+
+	# Pulse the scale slightly for effect
+	tween.tween_property(cardNode, "scale", Vector2(1.2, 1.2), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(cardNode, "scale", Vector2(1, 1), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
 
 func _reveal_cards() -> void:
 	queue_free_children(revealedCardsContainer)
@@ -466,9 +508,15 @@ func place_card(playedNumber: int, playerIndex: int) -> void:
 		waitingForRow = true
 
 		turnLabel.text = "Player %d must choose a row (1-4) " % playerIndex
+		rowChooseLabel.show()
 		statusLabel.text = "Enter the row number (1-4)  "
 		
+		playerCountInput.position = Vector2(1350, 180)
+		startButton.position = Vector2(1460, 180)
+		startButton.scale = Vector2(0.7, 0.7)
+		
 		playerCountInput.show()
+		playerCountInput.grab_focus()
 		playerCountInput.placeholder_text = "Row (1-4)"
 		playerCountInput.text = ""
 		startButton.text = "Confirm Row"
