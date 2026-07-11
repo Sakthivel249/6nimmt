@@ -1,198 +1,542 @@
-[gd_scene load_steps=4 format=3 uid="uid://gcmgqugxawfx"]
+[gd_scene load_steps=14 format=3 uid="uid://gcmgqugxawfx"]
 
-[ext_resource type="Texture2D" uid="uid://cghm3xn8wefw0" path="res://Background.png" id="1_3mqji"]
 [ext_resource type="Script" uid="uid://bah45pk3uefli" path="res://main.gd" id="1_x4av3"]
+[ext_resource type="Theme" uid="uid://b8plen0ba0wnq" path="res://ui_theme.tres" id="3_theme"]
+[ext_resource type="AudioStream" uid="uid://dqjehxgmobk1b" path="res://bgm.wav" id="4_bgm"]
+[ext_resource type="AudioStream" uid="uid://b8hhors2lmmti" path="res://click.wav" id="5_click"]
+[ext_resource type="AudioStream" uid="uid://coglg456ilyxa" path="res://card_place.wav" id="6_place"]
 
-[sub_resource type="FontVariation" id="FontVariation_x4av3"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
 
-[node name="Node" type="Node"]
-script = ExtResource("1_x4av3")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exit_hover"]
+bg_color = Color(1, 1, 1, 0.15)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.8)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(1, 1, 1, 0.2)
+shadow_size = 15
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exit_pressed"]
+bg_color = Color(1, 1, 1, 0.02)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exit_normal"]
+bg_color = Color(1, 1, 1, 0.05)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.3)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.05, 0.05, 0.08, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.15)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 30
+shadow_offset = Vector2(0, 15)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_hover"]
+bg_color = Color(0.98, 0.35, 0.52, 1)
+border_width_bottom = 8
+border_color = Color(0.85, 0.15, 0.35, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(0.98, 0.35, 0.52, 0.6)
+shadow_size = 25
+shadow_offset = Vector2(0, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_pressed"]
+bg_color = Color(0.8, 0.15, 0.3, 1)
+border_width_bottom = 2
+border_color = Color(0.6, 0.05, 0.15, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_normal"]
+bg_color = Color(0.941, 0.255, 0.431, 1)
+border_width_bottom = 8
+border_color = Color(0.725, 0.118, 0.275, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(0.941, 0.255, 0.431, 0.4)
+shadow_size = 20
+shadow_offset = Vector2(0, 6)
+
+[node name="MainScene" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 2.0
-offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_3mqji")
+theme = ExtResource("3_theme")
+script = ExtResource("1_x4av3")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="."]
-anchors_preset = -1
-anchor_left = 0.163
-anchor_top = 0.125
-anchor_right = 0.163
-anchor_bottom = 0.125
-offset_left = -131.776
-offset_top = -13.0
-offset_right = 264.224
-offset_bottom = 28.0
-theme_override_fonts/font = SubResource("FontVariation_x4av3")
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer/TopBar"]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_exit_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_exit_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_exit_normal")
+text = "Exit to Menu"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="Sidebar" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Sidebar"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Sidebar/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Sidebar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
 theme_override_font_sizes/font_size = 28
-text = "Enter the number of players :"
+text = "Game Status"
+horizontal_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="."]
-anchors_preset = -1
-anchor_left = 0.209
-anchor_top = 0.137
-anchor_right = 0.209
-anchor_bottom = 0.137
-offset_left = 251.232
-offset_top = -15.776
-offset_right = 345.232
-offset_bottom = 15.224
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/Sidebar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="start_button" type="Button" parent="."]
-anchors_preset = -1
-anchor_left = 0.257
-anchor_top = 0.174
-anchor_right = 0.257
-anchor_bottom = 0.174
-offset_left = 348.936
-offset_top = -12.752
-offset_right = 433.936
-offset_bottom = 34.248
+[node name="RoundLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Sidebar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_font_sizes/font_size = 20
+text = "Round: 1"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/Sidebar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "Scores:"
+fit_content = true
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/Sidebar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="StatusLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/Sidebar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+
+[node name="GameArea" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="PlayerTurnLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+
+[node name="PlayTable" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_focus")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HBoxTableContent" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainerStacks" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StacksGrid" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/CenterContainerStacks"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="RevealedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RevealedPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RevealedPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RevealedPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 22
+text = "Played Cards"
+horizontal_alignment = 1
+
+[node name="ChosenCardsContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RevealedPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="RowChooserDialog" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent"]
+visible = false
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RowChooserDialog"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RowChooserDialog/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RowChooserDialog/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "Choose Row"
+horizontal_alignment = 1
+
+[node name="RowsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RowChooserDialog/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="BtnRow1" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RowChooserDialog/MarginContainer/VBoxContainer/RowsContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_exit_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_exit_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_exit_normal")
+text = "Row 1"
+
+[node name="BtnRow2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RowChooserDialog/MarginContainer/VBoxContainer/RowsContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_exit_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_exit_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_exit_normal")
+text = "Row 2"
+
+[node name="BtnRow3" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RowChooserDialog/MarginContainer/VBoxContainer/RowsContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_exit_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_exit_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_exit_normal")
+text = "Row 3"
+
+[node name="BtnRow4" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HBoxTableContent/RowChooserDialog/MarginContainer/VBoxContainer/RowsContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_exit_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_exit_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_exit_normal")
+text = "Row 4"
+
+[node name="HandPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HandPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HandPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HandPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
 theme_override_font_sizes/font_size = 28
-text = "Start"
+text = "Your Hand"
+horizontal_alignment = 1
 
-[node name="StacksGrid" type="GridContainer" parent="."]
-anchors_preset = -1
-anchor_left = 0.267
-anchor_top = 0.592
-anchor_right = 0.267
-anchor_bottom = 0.592
-offset_left = -291.584
-offset_top = -234.616
-offset_right = 292.416
-offset_bottom = 234.384
+[node name="CenterContainerHand" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HandPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="PlayerHandContainer" type="HBoxContainer" parent="."]
-anchors_preset = -1
-anchor_left = 0.593
-anchor_top = 0.519
-anchor_right = 0.593
-anchor_bottom = 0.519
-offset_left = -88.136
-offset_top = -51.312
-offset_right = 330.864
-offset_bottom = 51.688
+[node name="PlayerHandContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GameArea/PlayTable/VBoxContainer/HandPanel/MarginContainer/VBoxContainer/CenterContainerHand"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="SetupDialog" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="UILayer" type="CanvasLayer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="SetupDialog"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="PlayerTurnLabel" type="Label" parent="UILayer"]
-anchors_preset = -1
-anchor_left = 0.585
-anchor_top = 0.423
-anchor_right = 0.585
-anchor_bottom = 0.423
-offset_left = -40.92
-offset_top = -37.104
-offset_right = 159.08
-offset_bottom = 36.896
-theme_override_font_sizes/font_size = 33
+[node name="MarginContainer" type="MarginContainer" parent="SetupDialog/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
 
-[node name="ScoreLabel" type="Label" parent="UILayer"]
-anchors_preset = -1
-anchor_left = 0.418
-anchor_top = 0.05
-anchor_right = 0.418
-anchor_bottom = 0.05
-offset_left = -64.536
-offset_top = 101.6
-offset_right = 144.464
-offset_bottom = 203.6
-theme_override_font_sizes/font_size = 35
+[node name="VBoxContainer" type="VBoxContainer" parent="SetupDialog/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
 
-[node name="ChosenCardsContainer" type="GridContainer" parent="UILayer"]
-anchors_preset = -1
-anchor_left = 0.586
-anchor_top = 0.721
-anchor_right = 0.586
-anchor_bottom = 0.721
-offset_left = -80.072
-offset_top = -46.208
-offset_right = 112.928
-offset_bottom = 81.792
-columns = 10
+[node name="Label" type="Label" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 40
+text = "Game Setup"
+horizontal_alignment = 1
 
-[node name="RevealLabel" type="Label" parent="."]
-anchors_preset = -1
-anchor_left = 0.592
-anchor_top = 0.637
-anchor_right = 0.592
-anchor_bottom = 0.637
-offset_left = -58.984
-offset_top = -22.776
-offset_right = 186.016
-offset_bottom = 23.224
-theme_override_font_sizes/font_size = 33
-text = "Revealed Cards"
+[node name="HBoxHumans" type="HBoxContainer" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="StackLabel" type="Label" parent="."]
-anchors_preset = -1
-anchor_left = 0.183
-anchor_top = 0.313
-anchor_right = 0.183
-anchor_bottom = 0.313
-offset_left = -106.816
-offset_top = -22.824
-offset_right = 78.184
-offset_bottom = 23.176
-theme_override_font_sizes/font_size = 33
-text = "Stack Cards"
+[node name="Label" type="Label" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer/HBoxHumans"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Human Players:"
 
-[node name="RowChooser" type="Label" parent="."]
-anchors_preset = -1
-anchor_left = 0.743
-anchor_top = 0.135
-anchor_right = 0.743
-anchor_bottom = 0.135
-offset_left = -201.936
-offset_top = -15.48
-offset_right = 395.064
-offset_bottom = 30.52
-theme_override_font_sizes/font_size = 33
-text = "Enter the row that you wanna choose"
+[node name="LineEdit" type="SpinBox" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer/HBoxHumans"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+alignment = 1
 
-[node name="LineEditAI" type="LineEdit" parent="."]
-anchors_preset = -1
-anchor_left = 0.206
-anchor_top = 0.221
-anchor_right = 0.206
-anchor_bottom = 0.221
-offset_left = 254.688
-offset_top = -15.208
-offset_right = 348.688
-offset_bottom = 15.792
+[node name="NamesContainer" type="VBoxContainer" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="LabelAI" type="Label" parent="."]
-anchors_preset = -1
-anchor_left = 0.161
-anchor_top = 0.212
-anchor_right = 0.161
-anchor_bottom = 0.212
-offset_left = -130.472
-offset_top = -17.376
-offset_right = 299.528
-offset_bottom = 21.624
-theme_override_font_sizes/font_size = 28
-text = "Enter the number of AI players :"
+[node name="HBoxAI" type="HBoxContainer" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="GameLabel" type="Label" parent="."]
-anchors_preset = -1
-anchor_left = 0.237
-anchor_top = 0.178
-anchor_right = 0.237
-anchor_bottom = 0.178
-offset_left = -54.024
-offset_top = -21.344
-offset_right = 67.976
-offset_bottom = 20.656
-theme_override_font_sizes/font_size = 35
-text = "6nimmt!"
+[node name="Label" type="Label" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer/HBoxAI"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "AI Players:"
 
-[connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]
+[node name="LineEditAI" type="SpinBox" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer/HBoxAI"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 10.0
+value = 3.0
+alignment = 1
+
+[node name="SetupErrorLabel" type="Label" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="start_button" type="Button" parent="SetupDialog/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_start_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_start_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_start_normal")
+text = "START GAME"
+
+[node name="GameOverDialog" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="GameOverDialog"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOverDialog/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverDialog/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="TitleLabel" type="Label" parent="GameOverDialog/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.6, 1)
+theme_override_font_sizes/font_size = 50
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="WinnerLabel" type="Label" parent="GameOverDialog/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+
+[node name="FinalScoresLabel" type="RichTextLabel" parent="GameOverDialog/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOverDialog/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="BtnPlayAgain" type="Button" parent="GameOverDialog/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_start_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_start_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_start_normal")
+text = "Play Again"
+
+[node name="BtnExit" type="Button" parent="GameOverDialog/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_exit_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_exit_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_exit_normal")
+text = "Exit to Menu"
+
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bgm")
+volume_db = -10.0
+autoplay = true
+
+[node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_click")
+
+[node name="PlacePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_place")
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopBar/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="SetupDialog/PanelContainer/MarginContainer/VBoxContainer/start_button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="GameOverDialog/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BtnPlayAgain" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="GameOverDialog/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BtnExit" to="." method="_on_exit_button_pressed"]

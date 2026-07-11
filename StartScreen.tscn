@@ -1,34 +1,166 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5850sp31esfx"]
+[gd_scene load_steps=12 format=3 uid="uid://b5850sp31esfx"]
 
 [ext_resource type="Script" uid="uid://bmmcap6llphhc" path="res://start_screen.gd" id="1_s4vtk"]
-[ext_resource type="Texture2D" uid="uid://dg2sptpoe015x" path="res://Entrance.png" id="2_d4clo"]
+[ext_resource type="Theme" uid="uid://b8plen0ba0wnq" path="res://ui_theme.tres" id="3_theme"]
+[ext_resource type="AudioStream" uid="uid://dqjehxgmobk1b" path="res://bgm.wav" id="4_bgm"]
+[ext_resource type="AudioStream" uid="uid://b8hhors2lmmti" path="res://click.wav" id="5_click"]
 
-[node name="Node" type="Node"]
-script = ExtResource("1_s4vtk")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_hover"]
+bg_color = Color(0.98, 0.35, 0.52, 1)
+border_width_bottom = 8
+border_color = Color(0.85, 0.15, 0.35, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(0.98, 0.35, 0.52, 0.6)
+shadow_size = 40
+shadow_offset = Vector2(0, 15)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_pressed"]
+bg_color = Color(0.8, 0.15, 0.3, 1)
+border_width_bottom = 2
+border_color = Color(0.6, 0.05, 0.15, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_normal"]
+bg_color = Color(0.941, 0.255, 0.431, 1)
+border_width_bottom = 8
+border_color = Color(0.725, 0.118, 0.275, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(0.941, 0.255, 0.431, 0.4)
+shadow_size = 30
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exit_hover"]
+bg_color = Color(1, 1, 1, 0.15)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.8)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(1, 1, 1, 0.2)
+shadow_size = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exit_pressed"]
+bg_color = Color(1, 1, 1, 0.02)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exit_normal"]
+bg_color = Color(1, 1, 1, 0.05)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.3)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="StartScreen" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = 2.0
-offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_d4clo")
+theme = ExtResource("3_theme")
+script = ExtResource("1_s4vtk")
+
+[node name="BackgroundRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 1
+metadata/_edit_lock_ = true
 
-[node name="start_button" type="Button" parent="."]
-anchors_preset = -1
-anchor_left = 0.485
-anchor_top = 0.933
-anchor_right = 0.485
-anchor_bottom = 0.933
-offset_left = -52.72
-offset_top = -19.584
-offset_right = 52.28
-offset_bottom = 19.416
-text = "START
-"
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="TitleLabel" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(900, 180)
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7)
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_offset_y = 12
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 20
+theme_override_font_sizes/normal_font_size = 140
+bbcode_enabled = true
+text = "[center][pulse freq=1.0 color=#ffffff40 ease=-2.0]6nimmt![/pulse][/center]"
+fit_content = true
+scroll_active = false
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 25
+
+[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(350, 85)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_start_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_start_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_start_normal")
+text = "PLAY NOW"
+
+[node name="ExitButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(350, 85)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_exit_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_exit_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_exit_normal")
+text = "QUIT"
+
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bgm")
+volume_db = -10.0
+autoplay = true
+
+[node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_click")
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsVBox/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsVBox/ExitButton" to="." method="_on_exit_button_pressed"]
