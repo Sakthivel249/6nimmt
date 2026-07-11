@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgkuhy26575v8"]
+[gd_scene load_steps=2 format=3 uid="uid://bs7c2l7xdhbl7"]
 
-[ext_resource type="Script" path="res://card.gd" id="1_kikvd"]
+[ext_resource type="Script" uid="uid://dx3itw66t8xtx" path="res://scripts/card.gd" id="1_kikvd"]
 
 [node name="Card" type="TextureButton"]
 anchors_preset = -1

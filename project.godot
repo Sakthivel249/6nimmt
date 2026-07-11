@@ -13,7 +13,7 @@ config_version=5
 config/name="com.sakthi.nimmt"
 run/main_scene="uid://b5850sp31esfx"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/graphics/icon.svg"
 
 [display]
 

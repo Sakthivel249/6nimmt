@@ -1,10 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://b002icdcn8qay"]
+[gd_scene load_steps=14 format=3 uid="uid://gcmgqugxawfx"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_x4av3"]
-[ext_resource type="Theme" path="res://ui_theme.tres" id="3_theme"]
-[ext_resource type="AudioStream" path="res://bgm.wav" id="4_bgm"]
-[ext_resource type="AudioStream" path="res://click.wav" id="5_click"]
-[ext_resource type="AudioStream" path="res://card_place.wav" id="6_place"]
+[ext_resource type="Script" uid="uid://bah45pk3uefli" path="res://scripts/main.gd" id="1_x4av3"]
+[ext_resource type="Theme" uid="uid://b8plen0ba0wnq" path="res://resources/ui_theme.tres" id="3_theme"]
+[ext_resource type="AudioStream" uid="uid://dqjehxgmobk1b" path="res://assets/audio/bgm.wav" id="4_bgm"]
+[ext_resource type="AudioStream" uid="uid://b8hhors2lmmti" path="res://assets/audio/click.wav" id="5_click"]
+[ext_resource type="AudioStream" uid="uid://coglg456ilyxa" path="res://assets/audio/card_place.wav" id="6_place"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
 
